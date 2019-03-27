@@ -4,6 +4,7 @@
 * @Software: PyCharm
 * @Time: 2019/3/27 21:05
 """
+from queue import Queue
 
 
 class Road(object):
@@ -15,3 +16,7 @@ class Road(object):
         self.__start = start
         self.__end = end
         self.__is_duplex = is_duplex
+        self.__roads = []
+        self.__roads.append([Queue(maxsize=length)] * channel)
+        if is_duplex is True:
+            self.__roads.append([Queue(maxsize=length)] * channel)
