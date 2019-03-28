@@ -33,7 +33,17 @@ def cross_data(cross):
         road_direction[i[0]] = i[1:]
     return road_direction
 
-if __name__ == "__main__":
+
+def update():
+    return
+def get_roads(cross):
+    date_graph = get_graph()
+    return date_graph[cross]
+def get_aim_relative_pos(graph):
+    return 0
+
+
+def get_graph():
     road_path = u'../road.txt'
     cross_path = u'../cross.txt'
     import read_txt
@@ -41,8 +51,13 @@ if __name__ == "__main__":
     road = read_txt.read_txt(road_path)
     cross = read_txt.read_txt(cross_path)
 
-    road_direction = cross_data(cross)
+    # road_direction = cross_data(cross)
     data_graph = graph_data(road)
 
-    for key in data_graph:
-        print(key, data_graph[key])
+
+    # for key in data_graph:
+    #     print(key, data_graph[key])
+
+    return data_graph
+# if __name__ == '__main__':
+#     print(get_roads(2))
