@@ -4,6 +4,7 @@
 * @Software: PyCharm
 * @Time: 2019/3/27 21:04
 """
+from utils import graph_data
 
 
 class Cross(object):
@@ -22,4 +23,12 @@ class Cross(object):
         pass
 
     def __move_turn_left(self, graph):
+        pass
+
+    def __move_turn_right(self, graph):
+        pass
+
+    def move(self):
+        roads = graph_data.get_cross_direction()
+        cars = [[road, road.get_cross_car(self)] for road in roads]
         pass

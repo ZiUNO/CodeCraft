@@ -16,6 +16,15 @@ class Car(object):
         self.__plan_time = plan_time
         self.__remaining_step = 0
         self.cur_pos = start
+        self.__has_moved = False
+
+    @property
+    def has_moved(self):
+        return self.__has_moved
+
+    @has_moved.setter
+    def has_moved(self, has_moved):
+        self.__has_moved = has_moved
 
     @property
     def id(self):

@@ -35,6 +35,7 @@ class Road(object):
         if i == self.__channel:
             return False
         car.remaining_step = remaining_step
+        car.has_moved = True
         self.__roads[start_to_end][i][pos] = car
         return True
 
@@ -63,6 +64,7 @@ class Road(object):
                     while tmp_pos != 0 and road[tmp_pos - 1] == 0 and tmp_step != 0:
                         tmp_pos -= 1
                         tmp_step -= 1
+                    road[pos].has_moved = False
                     road[tmp_pos] = road[pos]
                     road[pos] = 0
                 side[i] = road

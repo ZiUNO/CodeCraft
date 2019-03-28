@@ -9,7 +9,9 @@
 """
 from utils.road import Road
 from utils import read_txt
-def graph_data(data ):
+
+
+def graph_data(data):
     data_graph = {}
     for i in data:
         if i[4] not in data_graph.keys():
@@ -26,6 +28,7 @@ def graph_data(data ):
         data_graph[key].append(int(len(data_graph[key]) / 5))
     return data_graph
 
+
 # 功能：获取道路的方向
 def cross_data(cross):
     road_direction = {}
@@ -37,10 +40,13 @@ def cross_data(cross):
 def update():
     Road.update()
 
+
 def get_roads(cross):
     date_graph = get_graph()
- 
+
     return date_graph[cross]
+
+
 def get_aim_relative_pos(graph):
     return 0
 
@@ -48,17 +54,15 @@ def get_aim_relative_pos(graph):
 def get_graph():
     road_path = u'../road.txt'
 
-
     road = read_txt.read_txt(road_path)
 
-
     data_graph = graph_data(road)
-
 
     # for key in data_graph:
     #     print(key, data_graph[key])
 
     return data_graph
+
 
 def get_cross_direction():
     cross_path = u'../cross.txt'
