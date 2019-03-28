@@ -8,19 +8,19 @@
 
 class Graph(object):
 
-
     def __init__(self):
         self.__roads = []
         self.__crosses = []
         self.__graDic = {}
+        self.roadDic = {}
 
     @property
     def graDic(self):
         return self.__graDic
 
-
     def set_road(self, road):
         self.__roads.append(road)
+        self.roadDic[road.id] = road
 
     def set_cross(self, cross):
         self.__crosses.append(cross)
@@ -46,8 +46,14 @@ class Graph(object):
             i.update()
 
     def get_roads(self, cross):
-        return self.graDic[cross.id]
+        temp = []
+        for i in self.graDic[cross.id]:
+            if i in self.roadDic.keys():
+                temp.append(self.roadDic[i])
+            else:
+                temp.append(None)
 
+        return temp
 
     def get_aim_relative_pos(self, graph):
         return 0
@@ -77,5 +83,3 @@ class Graph(object):
 #     # print(g.get_cross())
 #
 #     # print(g.get_roads(temp))
-
-
