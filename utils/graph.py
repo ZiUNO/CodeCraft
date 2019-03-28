@@ -4,10 +4,7 @@
 * @Software: PyCharm
 * @Time: 2019/3/27 20:39
 """
-from utils.cross import Cross
-from utils.road import Road
-from utils import read_txt
-global mygraph
+
 
 class Graph(object):
 
@@ -42,7 +39,6 @@ class Graph(object):
     #     for i in cross:
     #         temp = Cross(i[0], i[1], [2], i[3], i[4])
     #         self.set_cross(temp)
-
 
 # if __name__ == '__main__':
 #     g = Graph()
