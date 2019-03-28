@@ -39,6 +39,10 @@ class Road(object):
         self.__roads[start_to_end][i][pos] = car
         return True
 
+    @property
+    def id(self):
+        return self.__id
+
     def del_car(self, car, start_to_end=True):
         if not self.__is_duplex and not start_to_end:
             return False
