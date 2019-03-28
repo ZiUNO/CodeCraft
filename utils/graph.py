@@ -4,6 +4,9 @@
 * @Software: PyCharm
 * @Time: 2019/3/27 20:39
 """
+from utils.cross import Cross
+from utils.road import Road
+from utils import read_txt
 
 
 class Graph(object):
@@ -17,3 +20,28 @@ class Graph(object):
 
     def set_cross(self, cross):
         self.__crosses.append(cross)
+
+    def get_cross(self):
+        return self.__crosses
+
+    def get_road(self):
+        return self.__roads
+
+    def init(self, road_path, cross_path):
+        # road_path = u'../road.txt'
+        # cross_path = u'../cross.txt'
+        cross = read_txt.read_txt(cross_path)
+        road = read_txt.read_txt(road_path)
+        for i in road:
+            temp = Road(i[0], i[1], i[2], i[3], i[4], i[5], [6])
+            self.set_road(temp)
+        for i in cross:
+            temp = Cross(i[0], i[1], [2], i[3], i[4])
+            self.set_cross(temp)
+
+
+if __name__ == '__main__':
+    g = Graph()
+    g.init("../road.txt", "../cross.txt")
+    print(g.get_road())
+    print(g.get_cross())
