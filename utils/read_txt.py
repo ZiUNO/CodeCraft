@@ -12,7 +12,11 @@ def read_txt(path): # 读取txt文件，返回二维数组
     for i in txt[1:]:
         data_mid = []
         for j in i[1:-1].split(','):
-            data_mid.append(int(j))
+            try:
+                data_mid.append(int(j))
+            except ValueError:
+                pass
         data.append(data_mid)
     return data
+
 
