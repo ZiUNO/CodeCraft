@@ -4,6 +4,8 @@
 * @Software: PyCharm
 * @Time: 2019/3/27 21:05
 """
+from utils import read_txt
+
 
 class Car(object):
     def __init__(self, id, start, end, speed, plan_time):
@@ -12,6 +14,7 @@ class Car(object):
         self.__end = end
         self.__speed = speed
         self.__plan_time = plan_time
+        self.__remaining_step = 0
         self.cur_pos = start
 
     @property
@@ -33,19 +36,23 @@ class Car(object):
     @property
     def plan_time(self):
         return self.__plan_time
-def getCarList():
 
-    import read_txt
+    @property
+    def remaining_step(self):
+        return self.__remaining_step
+
+    @remaining_step.setter
+    def remaining_step(self, remaining_step):
+        self.__remaining_step = remaining_step
+
+
+def getCarList():
     myCarList = []
 
     car_path = u'../car.txt'
     mycar = read_txt.read_txt(car_path)
     for i in mycar:
-        temp = Car(i[0],i[1],i[2],i[3],i[4])
+        temp = Car(i[0], i[1], i[2], i[3], i[4])
         myCarList.append(temp)
 
-
     return myCarList
-
-
-
