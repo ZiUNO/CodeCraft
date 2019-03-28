@@ -39,6 +39,7 @@ def update():
 
 def get_roads(cross):
     date_graph = get_graph()
+ 
     return date_graph[cross]
 def get_aim_relative_pos(graph):
     return 0

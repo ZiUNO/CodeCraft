@@ -1,17 +1,19 @@
 # -*- coding: utf-8 -*-
 """
-* @Author: jinzhe
+* @Author: ziuno
 * @Software: PyCharm
 * @Time: 2019/3/27 21:04
 """
-def move(data):
-    data
-import read_txt
-import graph_data
-road_path = u'../road.txt'
-cross_path = u'../cross.txt'
-road = read_txt.read_txt(road_path)
-cross = read_txt.read_txt(cross_path)
-road_direction = graph_data.cross_data(cross)
-data_graph=graph_data.graph_data(road)
-print (data_graph)
+
+
+class Cross(object):
+    def __init__(self, id, road_id_up, road_id_right, road_id_down, road_id_left):
+        self.__id = id
+        self.__road_id_up = road_id_up
+        self.__road_id_right = road_id_right
+        self.__road_id_down = road_id_down
+        self.__road_id_left = road_id_left
+
+    @property
+    def id(self):
+        return self.__id
