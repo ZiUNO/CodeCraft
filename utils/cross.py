@@ -4,7 +4,6 @@
 * @Software: PyCharm
 * @Time: 2019/3/27 21:04
 """
-from utils import graph_data
 
 
 class Cross(object):
@@ -21,15 +20,15 @@ class Cross(object):
 
     def __move_go_straight(self, graph):
         # 将车前进
-        pass
+        return True
 
     def __move_turn_left(self, graph):
         # 将车左转
-        pass
+        return True
 
     def __move_turn_right(self, graph):
         # 将车右转
-        pass
+        return True
 
     @staticmethod
     def __has_car_to_move(cars):
@@ -41,8 +40,9 @@ class Cross(object):
         return flag
 
     def move(self):
-        roads = graph_data.get_cross_direction()
-        cars = [[road, road.get_cross_car(self)] for road in roads]
-        while Cross.__has_car_to_move(cars):
-            # 判断车的移动
-            cars = [[road, road.get_cross_car(self)] for road in roads]
+        # roads = graph_data.get_cross_direction()
+        # cars = [[road, road.get_cross_car(self)] for road in roads]
+        # while Cross.__has_car_to_move(cars):
+        #     # 判断车的移动
+        #     cars = [[road, road.get_cross_car(self)] for road in roads]
+        pass

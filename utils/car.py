@@ -55,13 +55,13 @@ class Car(object):
         self.__remaining_step = remaining_step
 
 
-def getCarList():
-    myCarList = []
-
-    car_path = u'../car.txt'
-    mycar = read_txt.read_txt(car_path)
-    for i in mycar:
-        temp = Car(i[0], i[1], i[2], i[3], i[4])
-        myCarList.append(temp)
-
-    return myCarList
+# def getCarList():
+#     myCarList = []
+#
+#     car_path = u'../car.txt'
+#     mycar = read_txt.read_txt(car_path)
+#     for i in mycar:
+#         temp = Car(i[0], i[1], i[2], i[3], i[4])
+#         myCarList.append(temp)
+#
+#     return myCarList
