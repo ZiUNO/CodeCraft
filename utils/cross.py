@@ -17,3 +17,9 @@ class Cross(object):
     @property
     def id(self):
         return self.__id
+
+    def __move_go_straight(self, graph):
+        pass
+
+    def __move_turn_left(self, graph):
+        pass
