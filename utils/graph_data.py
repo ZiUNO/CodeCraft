@@ -7,8 +7,8 @@
 * 格式为
 * 道路id, 道路长度,最高速度 ,车道数目 ,连接节点id
 """
-
-
+from utils.road import Road
+from utils import read_txt
 def graph_data(data ):
     data_graph = {}
     for i in data:
@@ -35,7 +35,8 @@ def cross_data(cross):
 
 
 def update():
-    return
+    Road.update()
+
 def get_roads(cross):
     date_graph = get_graph()
     return date_graph[cross]
@@ -46,7 +47,6 @@ def get_aim_relative_pos(graph):
 def get_graph():
     road_path = u'../road.txt'
     cross_path = u'../cross.txt'
-    import read_txt
 
     road = read_txt.read_txt(road_path)
     cross = read_txt.read_txt(cross_path)
