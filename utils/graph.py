@@ -8,15 +8,32 @@
 
 class Graph(object):
 
+
     def __init__(self):
         self.__roads = []
         self.__crosses = []
+        self.__graDic = {}
+
+    @property
+    def graDic(self):
+        return self.__graDic
+
 
     def set_road(self, road):
         self.__roads.append(road)
 
     def set_cross(self, cross):
         self.__crosses.append(cross)
+
+        # print(cross.id)
+        # print(cross.road_id_up)
+        # print(cross.road_id_right)
+        # print(cross.road_id_down)
+        # print(cross.road_id_left)
+
+        self.graDic[cross.id] = [cross.road_id_up, cross.road_id_right, cross.road_id_down, cross.road_id_left]
+
+        # print(self.__graDic)
 
     def get_cross(self):
         return self.__crosses
@@ -27,6 +44,13 @@ class Graph(object):
     def update(self):
         for i in self.get_road():
             i.update()
+
+    def get_roads(self, cross):
+        return self.graDic[cross.id]
+
+
+    def get_aim_relative_pos(self, graph):
+        return 0
 
     # def init(self, road_path, cross_path):
     #     # road_path = u'../road.txt'
@@ -42,9 +66,16 @@ class Graph(object):
 
 # if __name__ == '__main__':
 #     g = Graph()
-#     g.init("../road.txt", "../cross.txt")
-#     for i in g.get_road():
+#     from utils.cross import Cross
+#     from utils.road import Road
+#     temp = Cross(4, 5003, 5010, 5002, -1)
+#     road = Road(5003, 20, 4, 2, 4, 5, 1)
+#     g.set_cross(temp)
+#     g.set_road(road)
+#     print(g.get_roads(temp))
+#     # print(g.get_road())
+#     # print(g.get_cross())
 #
-#         print(i.id)
-#     for i in g.get_cross():
-#         print(i)
+#     # print(g.get_roads(temp))
+
+

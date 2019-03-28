@@ -30,10 +30,25 @@ class Cross(object):
     def id(self):
         return self.__id
 
+    @property
+    def road_id_up(self):
+        return self.__road_id_up
+
+    @property
+    def road_id_right(self):
+        return self.__road_id_right
+
+    @property
+    def road_id_down(self):
+        return self.__road_id_down
+
+    @property
+    def road_id_left(self):
+        return self.__road_id_left
+
     def __move_go_straight(self, road, car):
         # 根据车的属性move_way将车前进
         return True
-
     def __move_turn_left(self, road, car):
         # 根据车的属性move_way将车左转
         return True
