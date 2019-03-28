@@ -74,7 +74,7 @@ class Road(object):
         direction = 1 if cross.id == self.__start else 0
         for i in range(self.__channel):
             for tmp in self.__roads[direction][i]:
-                if tmp != 0:
+                if tmp != 0 and not tmp.has_moved:
                     cross_car.append(tmp)
                     break
         return cross_car
