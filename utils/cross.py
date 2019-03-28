@@ -24,15 +24,15 @@ class Cross(object):
 
     @property
     def road_id_right(self):
-        return self.__road_id_up
+        return self.__road_id_right
 
     @property
     def road_id_down(self):
-        return self.__road_id_up
+        return self.__road_id_down
 
     @property
     def road_id_left(self):
-        return self.__road_id_up
+        return self.__road_id_left
 
     def __move_go_straight(self, graph):
         # 将车前进
