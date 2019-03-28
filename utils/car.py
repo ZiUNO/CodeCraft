@@ -4,10 +4,14 @@
 * @Software: PyCharm
 * @Time: 2019/3/27 21:05
 """
-from utils import read_txt
 
 
 class Car(object):
+    UNDEFINED = 0
+    GO_STRAIGHT = 1
+    TURN_RIGHT = 3
+    TURN_LEFT = 2
+
     def __init__(self, id, start, end, speed, plan_time):
         self.__id = id
         self.__start = start
@@ -15,8 +19,26 @@ class Car(object):
         self.__speed = speed
         self.__plan_time = plan_time
         self.__remaining_step = 0
-        self.cur_pos = start
+        self.__cur_pos = start
         self.__has_moved = False
+        self.__move_way = [0, 0]
+        self.__direction = Car.UNDEFINED
+
+    @property
+    def direction(self):
+        return self.__direction
+
+    @direction.setter
+    def direction(self, direction):
+        self.__direction = direction
+
+    @property
+    def move_way(self):
+        return self.__move_way
+
+    @move_way.setter
+    def move_way(self, move_way):
+        self.__move_way = move_way
 
     @property
     def has_moved(self):
@@ -53,7 +75,6 @@ class Car(object):
     @remaining_step.setter
     def remaining_step(self, remaining_step):
         self.__remaining_step = remaining_step
-
 
 # def getCarList():
 #     myCarList = []
