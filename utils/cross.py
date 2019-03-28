@@ -20,15 +20,29 @@ class Cross(object):
         return self.__id
 
     def __move_go_straight(self, graph):
+        # 将车前进
         pass
 
     def __move_turn_left(self, graph):
+        # 将车左转
         pass
 
     def __move_turn_right(self, graph):
+        # 将车右转
         pass
+
+    @staticmethod
+    def __has_car_to_move(cars):
+        flag = False
+        for i in cars:
+            if len(i[1]) != 0:
+                flag = True
+                break
+        return flag
 
     def move(self):
         roads = graph_data.get_cross_direction()
         cars = [[road, road.get_cross_car(self)] for road in roads]
-        pass
+        while Cross.__has_car_to_move(cars):
+            # 判断车的移动
+            cars = [[road, road.get_cross_car(self)] for road in roads]
