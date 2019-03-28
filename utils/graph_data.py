@@ -46,12 +46,11 @@ def get_aim_relative_pos(graph):
 
 def get_graph():
     road_path = u'../road.txt'
-    cross_path = u'../cross.txt'
+
 
     road = read_txt.read_txt(road_path)
-    cross = read_txt.read_txt(cross_path)
 
-    # road_direction = cross_data(cross)
+
     data_graph = graph_data(road)
 
 
@@ -59,5 +58,13 @@ def get_graph():
     #     print(key, data_graph[key])
 
     return data_graph
+
+def get_cross_direction():
+    cross_path = u'../cross.txt'
+    cross = read_txt.read_txt(cross_path)
+
+    road_direction = cross_data(cross)
+    return road_direction
+
 # if __name__ == '__main__':
-#     print(get_roads(2))
+#     print(get_cross_direction())
