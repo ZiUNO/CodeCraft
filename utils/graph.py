@@ -55,8 +55,9 @@ class Graph(object):
 
         return temp
 
-    def get_aim_relative_pos(self, graph):
-        return 0
+    def get_car_end_pos(self, car):
+        # 通过车的信息结合图的信息得知车的终点的位置
+        return [1, 1]
 
     # def init(self, road_path, cross_path):
     #     # road_path = u'../road.txt'

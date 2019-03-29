@@ -76,6 +76,8 @@ class Car(object):
     def remaining_step(self, remaining_step):
         self.__remaining_step = remaining_step
 
+    def move_first_step(self, graph):
+        pass
 # def getCarList():
 #     myCarList = []
 #

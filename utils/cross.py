@@ -49,6 +49,7 @@ class Cross(object):
     def __move_go_straight(self, road, car):
         # 根据车的属性move_way将车前进
         return True
+
     def __move_turn_left(self, road, car):
         # 根据车的属性move_way将车左转
         return True
@@ -80,7 +81,7 @@ class Cross(object):
         return road_car
 
     def move(self):
-        roads = self.__graph.get_cross_direction()  # 获得图的当前cross的链接的道路的列表
+        roads = self.__graph.get_roads()  # 获得图的当前cross的链接的道路的列表
         road_cars = [[road, road.get_cross_car(self)] for road in roads]
         while Cross.__has_car_to_move(road_cars):
             road_cars = [[road, road.get_cross_car(self)] for road in roads]
