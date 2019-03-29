@@ -9,9 +9,13 @@ from utils.graph import Graph
 
 
 class Cross(object):
-    STRAIGHT = 0
+    STRAIGHT = 2
     LEFT = 1
-    RIGHT = 2
+    RIGHT = 3
+    NORTH = 0
+    EAST = 1
+    SOUTH = 2
+    WEST = 3
 
     def __init__(self, id, road_id_up, road_id_right, road_id_down, road_id_left):
         self.__id = id
@@ -60,6 +64,12 @@ class Cross(object):
     @property
     def road_id_left(self):
         return self.__road_id_left
+
+    #判断路在当前路口的位置
+    def __get_road_pos_to_cross(self,road):
+        return self.graph.graDic[self.id].index(road.id)
+
+
 
     # 根据当前道路和转弯方向获取下一条路
     def __get_road_by_direction(self, road, turn):
