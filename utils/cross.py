@@ -4,8 +4,8 @@
 * @Software: PyCharm
 * @Time: 2019/3/27 21:04
 """
-from car import Car
-from graph import Graph
+from utils.car import Car
+from utils.graph import Graph
 
 
 class Cross(object):
@@ -20,6 +20,9 @@ class Cross(object):
         self.__road_id_down = road_id_down
         self.__road_id_left = road_id_left
         self.__graph = 0
+        self.LEFT = 1
+        self.STRAIGHT = 2
+        self.RIGHT = 3
         self.xy = None
 
     @property
@@ -58,16 +61,45 @@ class Cross(object):
     def road_id_left(self):
         return self.__road_id_left
 
+    # 根据当前道路和转弯方向获取下一条路
+    def __get_road_by_direction(self, road, turn):
+        roadList = self.graph.get_roads(self)
+        nextRoad = roadList[(roadList.index(road) + turn) % 4]
+
+        return nextRoad
+
     def __move_go_straight(self, road, car):
         # 根据车的属性move_way将车前进
+        if car.move_way[1] == 0:
+            road.move_car_by_step(car, car.move_way[0])
+        else:
+
+            if road.del_car(car):
+
+                nextRoad = self.__get_road_by_direction(road, self.STRAIGHT)
+                nextRoad.append_car_by_step(car, car.move_way[0], self)
+            else:
+                return False
+
         return True
 
     def __move_turn_left(self, road, car):
         # 根据车的属性move_way将车左转
+        if road.del_car(car):
+            nextRoad = self.__get_road_by_direction(road,self.LEFT)
+            nextRoad.append_car_by_step(car,car.move_way[1],self)
+        else:
+            return False
         return True
 
     def __move_turn_right(self, road, car):
         # 根据车的属性move_way将车右转
+        if road.del_car(car):
+            nextRoad = self.__get_road_by_direction(road,self.RIGHT)
+            nextRoad.append_car_by_step(car,car.move_way[1],self)
+        else:
+            return False
+
         return True
 
     @staticmethod
