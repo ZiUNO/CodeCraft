@@ -93,6 +93,21 @@ class Road(object):
                 return True
         return False
 
+    @property
+    def end(self):
+        return self.__end
+
+    @end.setter
+    def end(self, end):
+        self.__end = end
+
+    @property
+    def start(self):
+        return self.__start
+
+    @start.setter
+    def start(self, start):
+        self.__start = start
     def update(self):
         for j, side in enumerate(self.__roads):
             for k in range(self.__channel):

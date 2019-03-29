@@ -4,8 +4,8 @@
 * @Software: PyCharm
 * @Time: 2019/3/27 21:04
 """
-from utils.car import Car
-from utils.graph import Graph
+from car import Car
+from graph import Graph
 
 
 class Cross(object):
@@ -20,6 +20,7 @@ class Cross(object):
         self.__road_id_down = road_id_down
         self.__road_id_left = road_id_left
         self.__graph = 0
+        self.xy = None
 
     @property
     def graph(self):
@@ -28,6 +29,14 @@ class Cross(object):
     @graph.setter
     def graph(self, graph):
         self.__graph = graph
+
+    @property
+    def xy(self):
+        return self.__xy
+
+    @xy.setter
+    def xy(self, xy):
+        self.__xy = xy
 
     @property
     def id(self):
