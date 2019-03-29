@@ -4,8 +4,8 @@
 * @Software: PyCharm
 * @Time: 2019/3/27 21:05
 """
-from utils.car import Car
-from utils.cross import Cross
+from car import Car
+from cross import Cross
 
 
 class Road(object):
@@ -42,6 +42,19 @@ class Road(object):
     @property
     def id(self):
         return self.__id
+
+    @property
+    def end(self):
+        return self.__end
+    @end.setter
+    def end(self, end):
+        self.__end = end
+    @property
+    def start(self):
+        return self.__start
+    @start.setter
+    def start(self, start):
+        self.__start = start
 
     def del_car(self, car, start_to_end=True):
         if not self.__is_duplex and not start_to_end:
