@@ -65,11 +65,16 @@ class Graph(object):
 
     def get_car_start_pos(self, car):
         # 通过车的信息结合图的信息得知车的初始位置
-        return [0, 0]
+        return self.crossDic[car.start].xy
 
     def get_car_end_pos(self, car):
         # 通过车的信息结合图的信息得知车的终点的位置
-        return [1, 1]
+        return self.crossDic[car.end].xy
+
+    def get_end_direction(self, car, cross):
+        endcross = self.crossDic[car.end]
+        return [(1 if endcross.xy[1] > cross.xy[1] else 0), (1 if endcross.xy[0] > cross.xy[0] else 0),
+                (1 if endcross.xy[1] < cross.xy[1] else 0), (1 if endcross.xy[0] < cross.xy[0] else 0)]
 
     def updatexy(self):
         self.__crosses[0].xy = (0, 0)

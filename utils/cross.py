@@ -65,11 +65,9 @@ class Cross(object):
     def road_id_left(self):
         return self.__road_id_left
 
-    #判断路在当前路口的位置
-    def __get_road_pos_to_cross(self,road):
+    # 判断路在当前路口的位置
+    def __get_road_pos_to_cross(self, road):
         return self.graph.graDic[self.id].index(road.id)
-
-
 
     # 根据当前道路和转弯方向获取下一条路
     def __get_road_by_direction(self, road, turn):
@@ -122,13 +120,33 @@ class Cross(object):
         return flag
 
     def __judge_direction_and_distance(self, car, road):
-        speed_now = min(car.speed, road.speed)
-        roads = self.__graph.get_roads()
+        direction = Car.GO_STRAIGHT
+        now_speed = min(car.speed, road.speed)
         left_road = self.__get_road_by_direction(road, Cross.LEFT)
         right_road = self.__get_road_by_direction(road, Cross.RIGHT)
         straight_road = self.__get_road_by_direction(road, Cross.STRAIGHT)
+        left_speed = min(car.speed, left_road.speed)
+        straight_speed = min(car.speed, straight_road.speed)
+        right_speed = min(car.speed, right_road.speed)
+        spare_place, have_front_car = road.spare_place(car)
+        aim_direction = self.__graph.get_end_direction(car, self)
+        now_road_pos = self.__get_road_pos_to_cross(road)
+        if have_front_car or spare_place > now_speed:
+            road.move_car_by_step(car, now_speed)
+        else:
+            left_step = 0 if spare_place >= left_speed else left_speed - spare_place
+            right_step = 0 if spare_place >= right_speed else right_speed - spare_place
+            straight_step = 0 if spare_place >= straight_speed else straight_speed - spare_place
+            left_step = road.append_car_by_step(car, left_step, self, feeler=True) if left_step != 0 else 0
+            right_step = road.append_car_by_step(car, right_step, self, feeler=True) if right_step != 0 else 0
+            straight_step = road.append_car_by_step(car, straight_step, self, feeler=True) if straight_step != 0 else 0
 
-        return Car.GO_STRAIGHT
+            def get_direction(direction, road_pos, all_step):
+
+                return 0
+
+            direction = get_direction(aim_direction, now_road_pos, [left_step, straight_step, right_step])
+        return direction
 
     def __get_sort_road_car(self, road_cars):
         road_car = []
