@@ -28,7 +28,7 @@ class Road(object):
             for _ in range(channel):
                 self.__roads[i].append([0] * length)
 
-    def append_car_by_step(self, car, step, cross, left_or_right=RIGHT, feeler=False):
+    def append_car_by_step(self, car, step, cross, feeler=False, left_or_right=RIGHT):
         move_step = step
         if not self.__is_duplex and cross.id == self.__end and left_or_right == Road.RIGHT:
             return False
@@ -153,7 +153,20 @@ class Road(object):
                 print(i, side[i])
 
     def spare_place(self, car):
-        return [1, False]
+        for roads in self.__roads:
+            for road in roads:
+                if road.count(car) == 0:
+                    continue
+                tmp_road = list(reversed(road))
+                index = tmp_road.index(car)
+                step = 0
+                while index != len(tmp_road) - 1 and tmp_road[index + 1] == 0:
+                    index += 1
+                    step += 1
+                if index == len(tmp_road) - 1:
+                    return [step, False]
+                else:
+                    return [step, True]
 
 
 if __name__ == '__main__':
@@ -162,8 +175,10 @@ if __name__ == '__main__':
     car = Car(10004, 38, 5, 4, 4)
     car2 = Car(10004, 38, 5, 4, 4)
     road = Road(5002, 20, 4, 3, 3, 4, True)
-    road.append_car_by_step(car, 9, cross)
-    road.append_car_by_step(car2, 5, cross2)
+    # road.append_car_by_step(car, 9, cross)
+    road.append_car_by_step(car2, 5, cross)
+    print(road.append_car_by_step(car, 7, cross, True))
+    print(road.spare_place(car2))
     road.print()
     road.update()
     road.print()
