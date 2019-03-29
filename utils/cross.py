@@ -9,6 +9,9 @@ from utils.graph import Graph
 
 
 class Cross(object):
+    STRAIGHT = 0
+    LEFT = 1
+    RIGHT = 2
 
     def __init__(self, id, road_id_up, road_id_right, road_id_down, road_id_left):
         self.__id = id
@@ -19,7 +22,7 @@ class Cross(object):
         self.__graph = 0
 
     @property
-    def graph(self, graph):
+    def graph(self):
         self.__graph = graph
 
     @graph.setter
@@ -67,8 +70,13 @@ class Cross(object):
                 break
         return flag
 
+    def __get_road_by_direction(self, road, direction):
+        pass
+
     def __judge_direction_and_distance(self, car, road):
-        # 判断方向并在car内设置属性方向和前进move_way的值
+        speed_now = min(car.speed, road.speed)
+        roads = self.__graph.get_roads()
+        left = self.__get_road_by_direction()
         return Car.GO_STRAIGHT
 
     def __get_sort_road_car(self, road_cars):
@@ -111,3 +119,9 @@ class Cross(object):
                 if i == Car.TURN_RIGHT:
                     self.__move_turn_right(road, car)
                     continue
+
+
+if __name__ == '__main__':
+    graph = Graph()
+    cross = Cross(3, 5002, 5009, 5001, -1)
+    cross.graph = graph

@@ -52,8 +52,11 @@ class Graph(object):
                 temp.append(self.roadDic[i])
             else:
                 temp.append(None)
-
         return temp
+
+    def get_car_start_pos(self, car):
+        # 通过车的信息结合图的信息得知车的初始位置
+        return [0, 0]
 
     def get_car_end_pos(self, car):
         # 通过车的信息结合图的信息得知车的终点的位置

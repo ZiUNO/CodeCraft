@@ -19,10 +19,15 @@ class Car(object):
         self.__speed = speed
         self.__plan_time = plan_time
         self.__remaining_step = 0
-        self.__cur_pos = start
+        self.__cur_pos = []
+        self.__end_pos = []
         self.__has_moved = False
         self.__move_way = [0, 0]
         self.__direction = Car.UNDEFINED
+
+    def reset_cur_end_pos(self, graph):
+        self.__cur_pos = graph.get_car_start_pos(self)
+        self.__end_pos = graph.get_car_end_pos(self)
 
     @property
     def direction(self):

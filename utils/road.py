@@ -9,6 +9,9 @@ from utils.cross import Cross
 
 
 class Road(object):
+    LEFT = 0
+    RIGHT = 1
+
     def __init__(self, id, length, speed, channel, start, end, is_duplex):
         self.__id = id
         self.__length = length
@@ -25,61 +28,99 @@ class Road(object):
             for _ in range(channel):
                 self.__roads[i].append([0] * length)
 
-    def set_car_by_pos(self, pos, car, start_to_end=True, remaining_step=0):
-        if not self.__is_duplex and not start_to_end:
+    def append_car_by_step(self, car, step, cross, left_or_right=RIGHT):
+        if not self.__is_duplex and cross.id == self.__end and left_or_right == Road.RIGHT:
             return False
         i = 0
-        direction = 0 if start_to_end else 1
+        direction = 1 if (left_or_right == Road.LEFT and cross.id == self.__start) or (
+                left_or_right == Road.RIGHT and cross.id == self.__end) else 0
         while i < self.__channel and self.__roads[direction][i][-1] != 0:
             i += 1
         if i == self.__channel:
             return False
-        car.remaining_step = remaining_step
+        tmp_road = list(reversed(self.__roads[direction][i]))
+        for j, item in enumerate(tmp_road):
+            step -= 1
+            if step == 0:
+                car.remaining_step = 0
+                tmp_road[j] = car
+                break
+            elif j == len(tmp_road) - 1:
+                car.remaining_step = step
+                tmp_road[j] = car
+                break
+            elif tmp_road[j + 1] != 0:
+                car.remaining_step = step
+                tmp_road[j] = car
+                break
         car.has_moved = True
-        self.__roads[start_to_end][i][pos] = car
+        self.__roads[direction][i] = list(reversed(tmp_road))
         return True
+
+    def move_car_by_step(self, car, step):
+        for i, roads in enumerate(self.__roads):
+            for j, road in enumerate(roads):
+                if road.count(car) == 0:
+                    continue
+                tmp_road = self.__roads[i][j]
+                tmp_road = list(reversed(tmp_road))
+                index = tmp_road.index(car)
+                tmp_road[index] = 0
+                while index != len(tmp_road) - 1 and tmp_road[index + 1] == 0 and step != 0:
+                    index += 1
+                    step -= 1
+                car.has_moved = True
+                tmp_road[index] = car
+                self.__roads[i][j] = list(reversed(tmp_road))
+                return True
+        return False
+
+    @property
+    def speed(self):
+        return self.__speed
 
     @property
     def id(self):
         return self.__id
 
-    def del_car(self, car, start_to_end=True):
-        if not self.__is_duplex and not start_to_end:
-            return False
-        direction = 0 if start_to_end else 1
-        for i in range(self.__channel):
-            if self.__roads[direction][i].count(car) != 0:
-                index = self.__roads[direction][i].index(car)
-                self.__roads[direction][i][index] = 0
+    def del_car(self, car):
+        for i, roads in enumerate(self.__roads):
+            for j, road in enumerate(roads):
+                if road.count(car) == 0:
+                    continue
+                index = road.index(car)
+                self.__roads[i][j][index] = 0
                 return True
         return False
 
     def update(self):
-        for side in self.__roads:
-            for i in range(self.__channel):
-                road = side[i]
+        for j, side in enumerate(self.__roads):
+            for k in range(self.__channel):
+                road = side[k]
                 for pos, tmp_car in enumerate(road):
                     if tmp_car == 0:
                         continue
                     tmp_step = tmp_car.remaining_step
                     if tmp_step == 0:
+                        tmp_car.has_moved = False
                         continue
                     tmp_pos = pos
+                    car = self.__roads[j][k][pos]
                     while tmp_pos != 0 and road[tmp_pos - 1] == 0 and tmp_step != 0:
                         tmp_pos -= 1
                         tmp_step -= 1
-                    road[pos].has_moved = False
-                    road[tmp_pos] = road[pos]
+                    car.has_moved = False
                     road[pos] = 0
-                side[i] = road
+                    road[tmp_pos] = car
+                side[k] = road
 
     def get_cross_car(self, cross):
         cross_car = []
         direction = 1 if cross.id == self.__start else 0
-        for i in range(self.__channel):
-            for tmp in self.__roads[direction][i]:
-                if tmp != 0 and not tmp.has_moved:
-                    cross_car.append(tmp)
+        for road in self.__roads[direction]:
+            for car in road:
+                if car != 0 and not car.has_moved:
+                    cross_car.append(car)
                     break
         return cross_car
 
@@ -95,10 +136,15 @@ if __name__ == '__main__':
     car = Car(10004, 38, 5, 4, 4)
     car2 = Car(10004, 38, 5, 4, 4)
     road = Road(5002, 20, 4, 3, 3, 4, True)
-    road.set_car_by_pos(5, car, remaining_step=1)
-    road.set_car_by_pos(6, car2, remaining_step=5)
+    road.append_car_by_step(car, 9, cross)
+    road.append_car_by_step(car2, 5, cross)
     road.print()
     road.update()
     road.print()
+    road.move_car_by_step(car, 3)
+    road.print()
+    print(road.get_cross_car(cross))
+    print(road.get_cross_car(cross2))
+    road.update()
     print(road.get_cross_car(cross))
     print(road.get_cross_car(cross2))
