@@ -27,7 +27,7 @@ class Cross(object):
 
     @property
     def graph(self):
-        self.__graph = graph
+        return self.__graph
 
     @graph.setter
     def graph(self, graph):
@@ -86,8 +86,8 @@ class Cross(object):
     def __move_turn_left(self, road, car):
         # 根据车的属性move_way将车左转
         if road.del_car(car):
-            nextRoad = self.__get_road_by_direction(road,self.LEFT)
-            nextRoad.append_car_by_step(car,car.move_way[1],self)
+            nextRoad = self.__get_road_by_direction(road, self.LEFT)
+            nextRoad.append_car_by_step(car, car.move_way[1], self)
         else:
             return False
         return True
@@ -95,8 +95,8 @@ class Cross(object):
     def __move_turn_right(self, road, car):
         # 根据车的属性move_way将车右转
         if road.del_car(car):
-            nextRoad = self.__get_road_by_direction(road,self.RIGHT)
-            nextRoad.append_car_by_step(car,car.move_way[1],self)
+            nextRoad = self.__get_road_by_direction(road, self.RIGHT)
+            nextRoad.append_car_by_step(car, car.move_way[1], self)
         else:
             return False
 
@@ -111,13 +111,13 @@ class Cross(object):
                 break
         return flag
 
-    def __get_road_by_direction(self, road, direction):
-        pass
-
     def __judge_direction_and_distance(self, car, road):
         speed_now = min(car.speed, road.speed)
         roads = self.__graph.get_roads()
-        left = self.__get_road_by_direction()
+        left_road = self.__get_road_by_direction(road, Cross.LEFT)
+        right_road = self.__get_road_by_direction(road, Cross.RIGHT)
+        straight_road = self.__get_road_by_direction(road, Cross.STRAIGHT)
+
         return Car.GO_STRAIGHT
 
     def __get_sort_road_car(self, road_cars):

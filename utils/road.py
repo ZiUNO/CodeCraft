@@ -28,7 +28,8 @@ class Road(object):
             for _ in range(channel):
                 self.__roads[i].append([0] * length)
 
-    def append_car_by_step(self, car, step, cross, left_or_right=RIGHT):
+    def append_car_by_step(self, car, step, cross, left_or_right=RIGHT, feeler=False):
+        move_step = step
         if not self.__is_duplex and cross.id == self.__end and left_or_right == Road.RIGHT:
             return False
         i = 0
@@ -42,14 +43,20 @@ class Road(object):
         for j, item in enumerate(tmp_road):
             step -= 1
             if step == 0:
+                if feeler:
+                    return move_step
                 car.remaining_step = 0
                 tmp_road[j] = car
                 break
             elif j == len(tmp_road) - 1:
+                if feeler:
+                    return move_step - step
                 car.remaining_step = step
                 tmp_road[j] = car
                 break
             elif tmp_road[j + 1] != 0:
+                if feeler:
+                    return move_step - step
                 car.remaining_step = step
                 tmp_road[j] = car
                 break
@@ -108,6 +115,7 @@ class Road(object):
     @start.setter
     def start(self, start):
         self.__start = start
+
     def update(self):
         for j, side in enumerate(self.__roads):
             for k in range(self.__channel):
@@ -144,6 +152,9 @@ class Road(object):
             for i in range(self.__channel):
                 print(i, side[i])
 
+    def spare_place(self, car):
+        return [1, False]
+
 
 if __name__ == '__main__':
     cross = Cross(3, 5002, 5009, 5001, -1)
@@ -152,7 +163,7 @@ if __name__ == '__main__':
     car2 = Car(10004, 38, 5, 4, 4)
     road = Road(5002, 20, 4, 3, 3, 4, True)
     road.append_car_by_step(car, 9, cross)
-    road.append_car_by_step(car2, 5, cross)
+    road.append_car_by_step(car2, 5, cross2)
     road.print()
     road.update()
     road.print()
