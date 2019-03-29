@@ -141,11 +141,24 @@ class Cross(object):
             right_step = road.append_car_by_step(car, right_step, self, feeler=True) if right_step != 0 else 0
             straight_step = road.append_car_by_step(car, straight_step, self, feeler=True) if straight_step != 0 else 0
 
-            def get_direction(direction, road_pos, all_step):
-
-                return 0
-
-            direction = get_direction(aim_direction, now_road_pos, [left_step, straight_step, right_step])
+            all_step = [left_step, straight_step, right_step]
+            directions = []
+            for i in aim_direction:
+                if aim_direction[i] == 1:
+                    directions.append((i - now_road_pos) % 4)
+            steps = []
+            for tmp in directions:
+                if tmp == Cross.STRAIGHT:
+                    steps.append((all_step[1], Cross.STRAIGHT))
+                elif tmp == Cross.LEFT:
+                    steps.append((all_step[0], Cross.LEFT))
+                elif tmp == Cross.RIGHT:
+                    steps.append((all_step[2], Cross.RIGHT))
+            steps.sort(reverse=True)
+            final = steps[0]
+            car.move_way = [spare_place, final[0]]
+            car.direction = final[1]
+            direction = car.direction
         return direction
 
     def __get_sort_road_car(self, road_cars):
