@@ -4,6 +4,7 @@
 * @Software: PyCharm
 * @Time: 2019/3/27 21:05
 """
+from utils.cross import Cross
 
 
 class Car(object):
@@ -82,7 +83,70 @@ class Car(object):
         self.__remaining_step = remaining_step
 
     def move_first_step(self, graph):
-        pass
+        startpos = graph.crossDic[self.start]
+        endpos = graph.crossDic[self.end]
+        dirx = startpos.road_id_up if startpos.xy[0] < endpos.xy[0] else (
+            startpos.road_id_down if startpos.xy[0] > endpos.xy[0] else None)
+        diry = startpos.road_id_right if startpos.xy[1] < endpos.xy[1] else (
+            startpos.road_id_left if startpos.xy[1] > endpos.xy[1] else None)
+        # append_car_by_step(self, car, step, cross, left_or_right=RIGHT, feeler=False)
+        sel = []
+        r = (startpos.road_id_up, startpos.road_id_right, startpos.road_id_down, startpos.road_id_left)
+        if (not startpos.road_id_up == -1) and graph.roadDic[startpos.road_id_up].append_car_by_step(self, self.speed,
+                                                                                                     startpos,
+                                                                                                     Cross.RIGHT, True):
+            sel.append(0)
+        if (not startpos.road_id_right == -1) and graph.roadDic[startpos.road_id_right].append_car_by_step(self,
+                                                                                                           self.speed,
+                                                                                                           startpos,
+                                                                                                           Cross.RIGHT,
+                                                                                                           True):
+            sel.append(1)
+        if (not startpos.road_id_down == -1) and graph.roadDic[startpos.road_id_down].append_car_by_step(self,
+                                                                                                         self.speed,
+                                                                                                         startpos,
+                                                                                                         Cross.RIGHT,
+                                                                                                         True):
+            sel.append(2)
+        if (not startpos.road_id_left == -1) and graph.roadDic[startpos.road_id_left].append_car_by_step(self,
+                                                                                                         self.speed,
+                                                                                                         startpos,
+                                                                                                         Cross.RIGHT,
+                                                                                                         True):
+            sel.append(3)
+        if len(sel) == 0:
+            return False
+        else:
+            if len(sel) > 1:
+                w = [0] * len(sel)
+                for i in range(len(sel)):
+                    if sel[i] == 0:
+                        w[i] += (endpos.xy[1] - startpos.xy[1]) / (endpos.xy[1] + startpos.xy[1]) * 0.01
+                        w[i] += (1 if endpos.xy[1] > startpos.xy[1] else -1)
+                        w[i] *= 1.0 - (abs(self.speed - graph.roadDic[r[sel[i]]].speed) / (
+                                self.speed + graph.roadDic[r[sel[i]]].speed))
+                    elif sel[i] == 1:
+                        w[i] += (endpos.xy[0] - startpos.xy[0]) / (endpos.xy[0] + startpos.xy[0]) * 0.01
+                        w[i] += (1 if endpos.xy[0] > startpos.xy[0] else -1)
+                        w[i] *= 1.0 - (abs(self.speed - graph.roadDic[r[sel[i]]].speed) / (
+                                self.speed + graph.roadDic[r[sel[i]]].speed))
+                    elif sel[i] == 2:
+                        w[i] += (startpos.xy[1] - endpos.xy[1]) / (endpos.xy[1] + startpos.xy[1]) * 0.01
+                        w[i] += (1 if endpos.xy[1] < startpos.xy[1] else -1)
+                        w[i] *= 1.0 - (abs(self.speed - graph.roadDic[r[sel[i]]].speed) / (
+                                self.speed + graph.roadDic[r[sel[i]]].speed))
+                    elif sel[i] == 3:
+                        w[i] += (startpos.xy[0] - endpos.xy[0]) / (endpos.xy[0] + startpos.xy[0]) * 0.01
+                        w[i] += (1 if endpos.xy[0] < startpos.xy[0] else -1)
+                        w[i] *= 1.0 - (abs(self.speed - graph.roadDic[r[sel[i]]].speed) / (
+                                self.speed + graph.roadDic[r[sel[i]]].speed))
+                best = r[sel[w.index(max(w))]]
+            else:
+                best = r[sel[0]]
+            graph.roadDic[best].append_car_by_step(self, self.speed, startpos, Cross.RIGHT, False)
+            self.__isstartgo = False
+            return True
+
 # def getCarList():
 #     myCarList = []
 #
